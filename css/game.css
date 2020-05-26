@@ -1,3 +1,7 @@
+.container {
+	min-width: 300px;
+}
+
 .main-heading {
 	text-align: center;
 	word-break: break-word;
@@ -15,7 +19,7 @@
 .target {
   background-color: green;
   color: white;
-  font-size: 24pt;
+  font-size: 26px;
   text-align: center;
 }
 

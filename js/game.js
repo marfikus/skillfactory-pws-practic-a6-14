@@ -21,6 +21,8 @@ function startGame() {
   setNewTarget();
   // отмечаем время начала игры:
   firstHitTime = getTimestamp();
+
+  $('#button-start').text('Играть снова');
 }
 
 function setNewTarget() {
@@ -54,7 +56,6 @@ function gameFieldClick(event) {
       $("#total-time-played").text(totalPlayedSeconds);
       $("#misses").text(misses);
       $("#win-message").removeClass("d-none");
-      $('#button-start').text('Играть снова');
 
     } else {
       // иначе устанавливаем новую цель:
@@ -65,7 +66,10 @@ function gameFieldClick(event) {
     // увеличиваем счётчик промахов
     misses += 1;
     // (можно моргнуть этим квадратом красным цветом)  
-
+    $eventTarget.addClass('miss');
+    setTimeout(function() {
+      $eventTarget.removeClass('miss');
+    }, 150);
   }
 }
 
