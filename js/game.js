@@ -14,6 +14,10 @@ function startGame() {
   $('.game-field')
     .removeClass('target')
     .text('');
+  // скрываем прошлый результат:
+  $("#win-message").addClass("d-none");
+  // показываем игровое поле:
+  $(".game-row").removeClass("d-none");
   // устанавливаем новую цель:
   setNewTarget();
   // запускаем таймер
@@ -38,12 +42,14 @@ function gameFieldClick(event) {
     $($eventTarget)
       .removeClass('target')
       .text('');
-    // если счётчик равен 10, то:
+    // если счётчик равен максимальному значению:
     if (hits === maxHits) {
       // останавливаем таймер
       let totalPlayedMillis = getTimestamp() - firstHitTime;
       let totalPlayedSeconds = Number(totalPlayedMillis / 1000).toPrecision(3);
 
+      // скрываем игровое поле:
+      $(".game-row").addClass("d-none");
       // выводим результат
       $("#total-time-played").text(totalPlayedSeconds);
       $("#win-message").removeClass("d-none");
