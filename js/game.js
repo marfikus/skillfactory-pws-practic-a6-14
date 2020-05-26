@@ -11,10 +11,14 @@ function startGame() {
   // обнуляем счётчик промахов
   miss = 0;
   // убираем таргеты
-  $('.game-field').removeClass('target');
+  $('.game-field')
+    .removeClass('target')
+    .text('');
   // закрашиваем случайный квадрат зелёным и счётчик на нём выводим (добавляем класс цели) 
   const divSelector = randomDivId();
-  $(divSelector).addClass('target');
+  $(divSelector)
+    .addClass('target')
+    .text(hits + 1);
   // запускаем таймер
   firstHitTime = getTimestamp();
 }
@@ -26,7 +30,9 @@ function gameFieldClick(event) {
     // увеличиваем счётчик зелёных квадратов
     hits += 1;
     // возвращаем этому квадрату обычный вид (убираем класс цели)
-    $($eventTarget).removeClass('target');
+    $($eventTarget)
+      .removeClass('target')
+      .text('');
     // если счётчик равен 10, то:
     if (hits === maxHits) {
       // останавливаем таймер
@@ -42,7 +48,9 @@ function gameFieldClick(event) {
       // иначе закрашиваем другой случайный квадрат зелёным
       // и счётчик на нём выводим (добавляем класс цели)
       const divSelector = randomDivId();
-      $(divSelector).addClass('target');
+      $(divSelector)
+        .addClass('target')
+        .text(hits + 1);
     }
   } else {
     // иначе, если квадрат обычный (промах):
