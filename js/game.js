@@ -1,9 +1,8 @@
-// const numDivs = 36;
-const maxHits = 10;
+const maxHits = 10; // максимальное количество попаданий
 
-let hits = 0;
-let miss = 0;
-let firstHitTime = 0;
+let hits = 0; // текущее количество попаданий
+let miss = 0; // количество промахов
+let firstHitTime = 0; // метка времени в начале игры
 
 function startGame() {
   // обнуляем счётчик попаданий
@@ -20,7 +19,7 @@ function startGame() {
   $(".game-row").removeClass("d-none");
   // устанавливаем новую цель:
   setNewTarget();
-  // запускаем таймер
+  // отмечаем время начала игры:
   firstHitTime = getTimestamp();
 }
 
@@ -33,10 +32,10 @@ function setNewTarget() {
 }
 
 function gameFieldClick(event) {
-  // если он зелёный, то:
   const $eventTarget = $(event.target);
+  // если это цель:
   if ($eventTarget.hasClass('target')) {
-    // увеличиваем счётчик зелёных квадратов
+    // увеличиваем счётчик попаданий
     hits += 1;
     // возвращаем этому квадрату обычный вид (убираем класс цели)
     $($eventTarget)
@@ -44,7 +43,8 @@ function gameFieldClick(event) {
       .text('');
     // если счётчик равен максимальному значению:
     if (hits === maxHits) {
-      // останавливаем таймер
+      // останавливаем игру
+      // вычисляем прошедшее с начала игры время:
       let totalPlayedMillis = getTimestamp() - firstHitTime;
       let totalPlayedSeconds = Number(totalPlayedMillis / 1000).toPrecision(3);
 
