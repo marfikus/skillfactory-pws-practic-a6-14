@@ -1,14 +1,14 @@
 const maxHits = 10; // максимальное количество попаданий
 
 let hits = 0; // текущее количество попаданий
-let miss = 0; // количество промахов
+let misses = 0; // количество промахов
 let firstHitTime = 0; // метка времени в начале игры
 
 function startGame() {
   // обнуляем счётчик попаданий
   hits = 0;
   // обнуляем счётчик промахов
-  miss = 0;
+  misses = 0;
   // убираем таргеты
   $('.game-field')
     .removeClass('target')
@@ -52,6 +52,7 @@ function gameFieldClick(event) {
       $(".game-row").addClass("d-none");
       // выводим результат
       $("#total-time-played").text(totalPlayedSeconds);
+      $("#misses").text(misses);
       $("#win-message").removeClass("d-none");
       $('#button-start').text('Играть снова');
 
@@ -62,7 +63,7 @@ function gameFieldClick(event) {
   } else {
     // иначе, если квадрат обычный (промах):
     // увеличиваем счётчик промахов
-    miss += 1;
+    misses += 1;
     // (можно моргнуть этим квадратом красным цветом)  
 
   }
