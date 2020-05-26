@@ -6,7 +6,7 @@ let miss = 0;
 let firstHitTime = 0;
 
 function startGame() {
-  // обнуляем счётчик зелёных квадратов
+  // обнуляем счётчик попаданий
   hits = 0;
   // обнуляем счётчик промахов
   miss = 0;
@@ -14,13 +14,18 @@ function startGame() {
   $('.game-field')
     .removeClass('target')
     .text('');
-  // закрашиваем случайный квадрат зелёным и счётчик на нём выводим (добавляем класс цели) 
+  // устанавливаем новую цель:
+  setNewTarget();
+  // запускаем таймер
+  firstHitTime = getTimestamp();
+}
+
+function setNewTarget() {
+  // закрашиваем случайный квадрат зелёным и счётчик на нём выводим:
   const divSelector = randomDivId();
   $(divSelector)
     .addClass('target')
     .text(hits + 1);
-  // запускаем таймер
-  firstHitTime = getTimestamp();
 }
 
 function gameFieldClick(event) {
@@ -45,12 +50,8 @@ function gameFieldClick(event) {
       $('#button-start').text('Играть снова');
 
     } else {
-      // иначе закрашиваем другой случайный квадрат зелёным
-      // и счётчик на нём выводим (добавляем класс цели)
-      const divSelector = randomDivId();
-      $(divSelector)
-        .addClass('target')
-        .text(hits + 1);
+      // иначе устанавливаем новую цель:
+      setNewTarget();
     }
   } else {
     // иначе, если квадрат обычный (промах):
