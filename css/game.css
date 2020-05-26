@@ -1,3 +1,8 @@
+.main-heading {
+	text-align: center;
+	word-break: break-word;
+}
+
 .game-field {
   background-color: orange;
   /*min-height: 10vh;*/
@@ -16,4 +21,18 @@
 
 .miss {
   background-color: red;
+}
+
+#win-message h2 {
+	text-align: center;
+	word-break: break-word;
+}
+
+.button-start-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+#button-start {
+	margin-top: 15px;
 }
