@@ -35,8 +35,9 @@ function gameFieldClick(event) {
 
       // выводим результат
       $("#total-time-played").text(totalPlayedSeconds);
-      $("#win-message").removeClass("d-none");     
-      // ...
+      $("#win-message").removeClass("d-none");
+      $('#button-start').text('Играть снова');
+
     } else {
       // иначе закрашиваем другой случайный квадрат зелёным
       // и счётчик на нём выводим (добавляем класс цели)
