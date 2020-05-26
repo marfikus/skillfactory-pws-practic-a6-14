@@ -1,8 +1,11 @@
 const maxHits = 10; // максимальное количество попаданий
+const pointsForHit = 10; // количество очков за 1 попадание 
+const penaltyForMiss = 5; // количество штрафных очков за 1 промах
 
 let hits = 0; // текущее количество попаданий
 let misses = 0; // количество промахов
 let firstHitTime = 0; // метка времени в начале игры
+let totalPoints = 0; // итоговое количество очков
 
 function startGame() {
   // обнуляем счётчик попаданий
@@ -55,6 +58,20 @@ function gameFieldClick(event) {
       // выводим результат
       $("#total-time-played").text(totalPlayedSeconds);
       $("#misses").text(misses);
+
+      // считаем количество заработанных очков минус штрафные за промахи:
+      totalPoints = (hits * pointsForHit) - (misses * penaltyForMiss);
+      // можно ещё завязать на время: чем быстрее справился, тем больше коэффициент...
+      // но это ещё в зависимости от maxHits должно быть...
+
+      // если много промахов, то число может получиться отрицательным
+      // не допускаем такого:
+      if (totalPoints < 0) {
+        totalPoints = 0; 
+      }
+      $("#total-points").text(totalPoints);
+
+
       $("#win-message").removeClass("d-none");
 
     } else {
@@ -65,7 +82,7 @@ function gameFieldClick(event) {
     // иначе, если квадрат обычный (промах):
     // увеличиваем счётчик промахов
     misses += 1;
-    // (можно моргнуть этим квадратом красным цветом)  
+    // моргаем этим квадратом красным цветом:
     $eventTarget.addClass('miss');
     setTimeout(function() {
       $eventTarget.removeClass('miss');
