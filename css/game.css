@@ -1,6 +1,8 @@
 .game-field {
   background-color: orange;
-  min-height: 10vh;
+  /*min-height: 10vh;*/
+  width: 10%;
+  height: 10vh;
   margin: 1px 1px 1px 1px;
   line-height: 10vh;
 }
