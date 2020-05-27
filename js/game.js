@@ -30,14 +30,6 @@ function startGame() {
   $('#button-start').text('Играть снова');
 }
 
-function setNewTarget() {
-  // закрашиваем случайный квадрат зелёным и счётчик на нём выводим:
-  const divSelector = randomDivId();
-  $(divSelector)
-    .addClass('target')
-    .text(hits + 1);
-}
-
 function gameFieldClick(event) {
   const $eventTarget = $(event.target);
   // если это цель:
@@ -51,46 +43,7 @@ function gameFieldClick(event) {
     // если счётчик равен максимальному значению:
     if (hits === maxHits) {
       // останавливаем игру
-      // вычисляем прошедшее с начала игры время:
-      let totalPlayedMillis = getTimestamp() - firstHitTime;
-      let totalPlayedSeconds = Number(totalPlayedMillis / 1000).toPrecision(3);
-
-      // скрываем игровое поле:
-      $(".game-row").addClass("d-none");
-      // выводим результат
-      $("#total-time-played").text(totalPlayedSeconds);
-      $("#misses").text(misses);
-
-      // расчёт бонусных очков в зависимости от темпа игры:
-      // сбрасываем к номинальному значению:
-      speedBonus = 1.0;
-      // считаем средний темп:
-      // время игры делим на максимальное количество попаданий:
-      let currentSpeed = totalPlayedSeconds / maxHits;
-      // console.log('currentSpeed: ', currentSpeed);
-      // если текущий темп выше номинального (число меньше):
-      if (currentSpeed < nominalSpeed) {
-        // считаем разницу между номинальным и текущим и прибавляем её к номинальному
-        speedBonus = nominalSpeed + (nominalSpeed - currentSpeed);
-        // console.log('speedBonus: ', speedBonus);
-      }
-
-      // считаем общее количество заработанных очков, округляем до целого:
-      const pointsForHits = Math.round(hits * nominalPointsForHit * speedBonus);
-      // общее количество штрафных:
-      const penaltyForMisses = misses * penaltyForMiss;
-      // итог:
-      totalPoints = pointsForHits - penaltyForMisses;
-
-      // если много промахов, то число может получиться отрицательным
-      // не допускаем такого:
-      if (totalPoints < 0) {
-        totalPoints = 0; 
-      }
-      $("#total-points").text(totalPoints);
-
-      $("#win-message").removeClass("d-none");
-
+      endGame();
     } else {
       // иначе устанавливаем новую цель:
       setNewTarget();
@@ -105,6 +58,56 @@ function gameFieldClick(event) {
       $eventTarget.removeClass('miss');
     }, 150);
   }
+}
+
+function setNewTarget() {
+  // закрашиваем случайный квадрат зелёным и счётчик на нём выводим:
+  const divSelector = randomDivId();
+  $(divSelector)
+    .addClass('target')
+    .text(hits + 1);
+}
+
+function endGame() {
+  // вычисляем прошедшее с начала игры время:
+  let totalPlayedMillis = getTimestamp() - firstHitTime;
+  let totalPlayedSeconds = Number(totalPlayedMillis / 1000).toPrecision(3);
+
+  // скрываем игровое поле:
+  $(".game-row").addClass("d-none");
+  // выводим результат
+  $("#total-time-played").text(totalPlayedSeconds);
+  $("#misses").text(misses);
+
+  // расчёт бонусных очков в зависимости от темпа игры:
+  // сбрасываем к номинальному значению:
+  speedBonus = 1.0;
+  // считаем средний темп:
+  // время игры делим на максимальное количество попаданий:
+  let currentSpeed = totalPlayedSeconds / maxHits;
+  // console.log('currentSpeed: ', currentSpeed);
+  // если текущий темп выше номинального (число меньше):
+  if (currentSpeed < nominalSpeed) {
+    // считаем разницу между номинальным и текущим и прибавляем её к номинальному
+    speedBonus = nominalSpeed + (nominalSpeed - currentSpeed);
+    // console.log('speedBonus: ', speedBonus);
+  }
+
+  // считаем общее количество заработанных очков, округляем до целого:
+  const pointsForHits = Math.round(hits * nominalPointsForHit * speedBonus);
+  // общее количество штрафных:
+  const penaltyForMisses = misses * penaltyForMiss;
+  // итог:
+  totalPoints = pointsForHits - penaltyForMisses;
+
+  // если много промахов, то число может получиться отрицательным
+  // не допускаем такого:
+  if (totalPoints < 0) {
+    totalPoints = 0; 
+  }
+  $("#total-points").text(totalPoints);
+
+  $("#win-message").removeClass("d-none");
 }
 
 function init() {
