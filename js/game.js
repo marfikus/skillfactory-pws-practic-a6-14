@@ -1,7 +1,9 @@
-const maxHits = 10; // максимальное количество попаданий
-const pointsForHit = 10; // количество очков за 1 попадание 
-const penaltyForMiss = 5; // количество штрафных очков за 1 промах
 
+const maxHits = 10; // максимальное количество попаданий
+const nominalPointsForHit = 10; // количество очков за 1 попадание (номинальное)
+const penaltyForMiss = 5; // количество штрафных очков за 1 промах
+const nominalSpeed = 1.0; // номинальная скорость попаданий (темп)
+let speedBonus = 1.0; // бонус за скорость
 let hits = 0; // текущее количество попаданий
 let misses = 0; // количество промахов
 let firstHitTime = 0; // метка времени в начале игры
@@ -59,10 +61,26 @@ function gameFieldClick(event) {
       $("#total-time-played").text(totalPlayedSeconds);
       $("#misses").text(misses);
 
-      // считаем количество заработанных очков минус штрафные за промахи:
-      totalPoints = (hits * pointsForHit) - (misses * penaltyForMiss);
-      // можно ещё завязать на время: чем быстрее справился, тем больше коэффициент...
-      // но это ещё в зависимости от maxHits должно быть...
+      // расчёт бонусных очков в зависимости от темпа игры:
+      // сбрасываем к номинальному значению:
+      speedBonus = 1.0;
+      // считаем средний темп:
+      // время игры делим на максимальное количество попаданий:
+      let currentSpeed = totalPlayedSeconds / maxHits;
+      // console.log('currentSpeed: ', currentSpeed);
+      // если текущий темп выше номинального (число меньше):
+      if (currentSpeed < nominalSpeed) {
+        // считаем разницу между номинальным и текущим и прибавляем её к номинальному
+        speedBonus = nominalSpeed + (nominalSpeed - currentSpeed);
+        // console.log('speedBonus: ', speedBonus);
+      }
+
+      // считаем общее количество заработанных очков, округляем до целого:
+      const pointsForHits = Math.round(hits * nominalPointsForHit * speedBonus);
+      // общее количество штрафных:
+      const penaltyForMisses = misses * penaltyForMiss;
+      // итог:
+      totalPoints = pointsForHits - penaltyForMisses;
 
       // если много промахов, то число может получиться отрицательным
       // не допускаем такого:
@@ -70,7 +88,6 @@ function gameFieldClick(event) {
         totalPoints = 0; 
       }
       $("#total-points").text(totalPoints);
-
 
       $("#win-message").removeClass("d-none");
 
