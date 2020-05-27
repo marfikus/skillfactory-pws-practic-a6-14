@@ -27,7 +27,9 @@ function startGame() {
   // отмечаем время начала игры:
   firstHitTime = getTimestamp();
 
-  $('#button-start').text('Играть снова');
+  $('#button-start')
+    .text('Играть снова')
+    .css('margin-top', '50px');
 }
 
 function gameFieldClick(event) {
@@ -107,6 +109,7 @@ function endGame() {
   }
   $("#total-points").text(totalPoints);
 
+  $('#button-start').css('margin-top', '15px');
   $("#win-message").removeClass("d-none");
 }
 
