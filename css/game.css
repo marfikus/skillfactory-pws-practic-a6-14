@@ -1,6 +1,18 @@
+.container {
+	min-width: 300px;
+}
+
+.main-heading {
+	margin-top: 10px;
+	text-align: center;
+	word-break: break-word;
+}
+
 .game-field {
   background-color: orange;
-  min-height: 10vh;
+  /*min-height: 10vh;*/
+  width: 10%;
+  height: 10vh;
   margin: 1px 1px 1px 1px;
   line-height: 10vh;
 }
@@ -8,10 +20,24 @@
 .target {
   background-color: green;
   color: white;
-  font-size: 24pt;
+  font-size: 26px;
   text-align: center;
 }
 
 .miss {
   background-color: red;
+}
+
+#win-message h2 {
+	text-align: center;
+	word-break: break-word;
+}
+
+.button-start-wrapper {
+	display: flex;
+	justify-content: center;
+}
+
+#button-start {
+	margin-top: 15px;
 }
